@@ -10,7 +10,7 @@
     <div>
       <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
       <div class="relative mt-1">
-        <input id="email" name="email" type="email" required aria-required="true" placeholder="you@example.com" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm transition focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none" />
+        <input [(ngModel)]="email" id="email" name="email" type="email" required aria-required="true" placeholder="you@example.com" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm transition focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none" />
         <p class="mt-1 hidden text-xs text-red-600" id="emailError">Please enter a valid email.</p>
       </div>
     </div>
@@ -19,8 +19,8 @@
     <div>
       <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
       <div class="relative mt-1">
-        <input id="password" name="password" type="password" required aria-required="true" placeholder="••••••••" minlength="6" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm transition focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none" />
-        <button type="button" id="togglePassword" class="absolute top-1/2 right-2 -translate-y-1/2 text-sm text-gray-500 hover:text-gray-700 focus:outline-none" aria-label="Show password">Show</button>
+        <input [(ngModel)]="password" id="password" name="password" type="{{inputPassword}}" required aria-required="true" minlength="6" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm transition focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none" />
+        <button type="button" id="togglePassword" class="absolute top-1/2 right-2 -translate-y-1/2 text-sm text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer" aria-label="Show password" (click)="showPassword()">{{textShowPassword}}</button>
         <p class="mt-1 hidden text-xs text-red-600" id="passwordError">Password must be at least 6 characters.</p>
       </div>
     </div>
@@ -31,14 +31,12 @@
         <input type="checkbox" id="remember" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
         Remember me
       </label>
-      <a href="#" class="text-sm text-indigo-600 hover:underline">Forgot password?</a>
     </div>
 
     <!-- Submit -->
     <div>
-      <button type="submit" class="inline-flex w-full items-center justify-center rounded-md bg-amber-500 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-amber-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1 focus:outline-none">Sign in</button>
+      <button (click)="loginUser()" type="submit" class="inline-flex w-full items-center justify-center rounded-md bg-amber-500 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-amber-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1 focus:outline-none">Sign in</button>
     </div>
   </form>
 
-  <footer class="mt-6 text-center text-sm text-gray-500">Don’t have an account? <a href="#" class="text-indigo-600 hover:underline">Create one</a></footer>
 </section>
