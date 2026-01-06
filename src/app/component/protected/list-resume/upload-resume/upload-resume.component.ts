@@ -33,7 +33,7 @@ export class UploadResumeComponent {
 
     const formData = new FormData();
     this.files.forEach((file: File) => {
-      formData.append('file', file);
+      formData.append('files', file);
     })
 
     this.resumeService.uploadResume(formData).subscribe({

@@ -11,18 +11,17 @@ export class ResumeService {
 
   httpClient = inject(HttpClient);
 
-  getAllResume(): Observable<ResumeListResponse>  {
+  getAllResume(): Observable<any>  {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' // TODO: + localStorage.getItem('token'),
+      'Content-Type': 'application/json'
     });
-    return this.httpClient.get<ResumeListResponse>(`${environment.apiURL}/resume/list`, {headers});
+    return this.httpClient.get<any>(`${environment.apiURL}/api/v1/resume/list`, {headers});
   }
 
   uploadResume(formData: FormData): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' // TODO: + localStorage.getItem('token'),
     });
-    return this.httpClient.post(`${environment.apiURL}/resume/upload`, formData, {headers});
+    return this.httpClient.post(`${environment.apiURL}/api/v1/resume/upload`, formData, {headers});
   }
 }

@@ -10,18 +10,25 @@ import {
   throwError
 } from 'rxjs';
 import {AuthService} from '../../../service/auth.service';
+import {Router} from '@angular/router';
 
 let isRefreshing = false;
 const refreshSubject = new BehaviorSubject<string | null>(null);
 
+const PUBLIC_ENDPOINTS = [
+  '/iam/login',
+  '/iam/refresh',
+  '/iam/logout'
+];
+
 export const RefreshInterceptor: HttpInterceptorFn = (req, next) => {
   const http = inject(HttpClient);
   const auth = inject(AuthService);
+  const router = inject(Router);
 
-  if (req.url.includes('/iam/refresh')) {
+  if (PUBLIC_ENDPOINTS.some(url => req.url.includes(url))) {
     return next(req);
   }
-
   return next(req).pipe(
     catchError(err => {
       if (err.status !== 401) {
@@ -39,13 +46,13 @@ export const RefreshInterceptor: HttpInterceptorFn = (req, next) => {
         ).pipe(
           switchMap(res => {
             isRefreshing = false;
-            auth.setAccessToken(res.access_token);
-            refreshSubject.next(res.access_token);
+            auth.setAccessToken(res.token);
+            refreshSubject.next(res.token);
 
             return next(
               req.clone({
                 setHeaders: {
-                  Authorization: `Bearer ${res.access_token}`
+                  Authorization: `Bearer ${res.token}`
                 }
               })
             );
@@ -53,6 +60,7 @@ export const RefreshInterceptor: HttpInterceptorFn = (req, next) => {
           catchError(refreshErr => {
             isRefreshing = false;
             auth.clear();
+            router.navigate(['/login']).then()
             return throwError(() => refreshErr);
           })
         );

@@ -14,17 +14,11 @@ import {ResumeService} from '../../../service/resume.service';
   templateUrl: './list-resume.component.html',
   styleUrl: './list-resume.component.css',
 })
-export class ListResumeComponent implements OnDestroy {
-
-  intervalId: any;
-
-  ngOnDestroy() {
-    clearInterval(this.intervalId);
-  }
+export class ListResumeComponent {
 
   arrColumns: Array<any> = [
-    { key: 'candidate_name', label: 'Nome do Candidato', sortable: true },
-    { key: 'profile', label: 'Perfil do Candidato', sortable: true }
+    { key: 'name_professional', label: 'Nome do Candidato', sortable: true },
+    { key: 'position', label: 'Perfil do Candidato', sortable: true }
   ]
 
   // Upload Config
@@ -52,7 +46,7 @@ export class ListResumeComponent implements OnDestroy {
     }
     this.resumeService.getAllResume().subscribe({
       next: res => {
-        this.arrResume = res.data;
+        this.arrResume = res;
         if (toggle) {
           this.toggleLoading();
         }
@@ -65,12 +59,5 @@ export class ListResumeComponent implements OnDestroy {
   arrResume: Array<any> = []
   constructor() {
     this.fetchResume(true);
-    this.intervalId = setInterval(() => {
-      this.fetchResume(false)
-    }, 5000);
-  }
-
-  protected onConfirm() {
-    console.log('Confirming upload...');
   }
 }
