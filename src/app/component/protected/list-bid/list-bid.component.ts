@@ -1,9 +1,8 @@
-import {Component, inject, OnDestroy} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {DynamicTableComponent} from '../../infra/dynamic-table/dynamic-table.component';
 import {SpinnerComponent} from '../../infra/spinner/spinner.component';
 import {BidService} from '../../../service/bid.service';
 import {UploadBidComponent} from './upload-bid/upload-bid.component';
-import {transformEvaluate} from '../../../util/utils';
 import {Router} from '@angular/router';
 
 @Component({
@@ -16,21 +15,13 @@ import {Router} from '@angular/router';
   templateUrl: './list-bid.component.html',
   styleUrl: './list-bid.component.css',
 })
-export class ListBidComponent implements OnDestroy {
-
-  intervalId: any;
-
-  ngOnDestroy() {
-    clearInterval(this.intervalId);
-  }
+export class ListBidComponent {
 
   arrColumns: Array<any> = [
-    { key: 'contract_authority', label: 'Nome da Entidade', sortable: true },
+    { key: 'customer_name', label: 'Nome da Entidade', sortable: true },
     { key: 'reference', label: '# Referência', sortable: true },
-    { key: 'notebook_charge_file', label: 'Caderno de Encargo', sortable: true },
-    { key: 'procedure_program_file', label: 'Programa de Procedimentos', sortable: true },
-    { key: 'evaluated_at', label: 'Analisado em', sortable: true },
-    { key: 'evaluated', label: 'Status', sortable: true }
+    { key: 'object', label: 'Título', sortable: true },
+    { key: 'on_evaluation', label: 'Status', sortable: false }
   ]
 
   // Upload Config
@@ -58,19 +49,7 @@ export class ListBidComponent implements OnDestroy {
     }
     this.bidService.getAllBid().subscribe({
       next: res => {
-        this.arrBid = [];
-        res.data.forEach(bid => {
-          this.arrBid.push({
-            contract_authority: bid.contract_authority,
-            reference: bid.reference,
-            notebook_charge_file: bid.notebook_charge_file,
-            procedure_program_file: bid.procedure_program_file,
-            evaluated_at: bid.evaluated_at,
-            evaluated: transformEvaluate(bid.evaluated),
-            id: bid.id,
-            created_at: bid.created_at
-          });
-        })
+        this.arrBid = res;
         if (toggle) {
           this.toggleLoading();
         }
@@ -83,9 +62,6 @@ export class ListBidComponent implements OnDestroy {
   arrBid: Array<any> = []
   constructor() {
     this.fetchBid(true);
-    this.intervalId = setInterval(() => {
-      this.fetchBid(false)
-    }, 5000);
   }
 
   protected onEvaluate($event: any) {

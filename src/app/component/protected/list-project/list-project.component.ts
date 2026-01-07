@@ -16,8 +16,8 @@ export class ListProjectComponent {
 
   arrColumns: Array<any> = [
     { key: 'customer_name', label: 'Nome do Cliente', sortable: true },
-    { key: 'title', label: 'Título do Projeto', sortable: true },
-    { key: 'business_sector', label: 'Setor', sortable: true }
+    { key: 'project_name', label: 'Título do Projeto', sortable: true },
+    { key: 'reference', label: 'Referência', sortable: true }
   ]
 
   // Modal Box Config
@@ -42,9 +42,9 @@ export class ListProjectComponent {
   arrProject: Array<any> = []
   constructor() {
     this.toggleLoading();
-    this.projectService.getPageProject().subscribe({
+    this.projectService.getAllProject().subscribe({
       next: res => {
-        this.arrProject = res.data;
+        this.arrProject = res;
         this.toggleLoading();
       },
       error: err => {},

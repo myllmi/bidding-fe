@@ -11,12 +11,11 @@ export class BidService {
 
   httpClient = inject(HttpClient);
 
-  getAllBid(): Observable<BiddingListResponse>  {
+  getAllBid(): Observable<any>  {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' // TODO: + localStorage.getItem('token'),
+      'Content-Type': 'application/json'
     });
-    return this.httpClient.get<BiddingListResponse>(`${environment.apiURL}/bidding/list`, {headers})
+    return this.httpClient.get<any>(`${environment.apiURL}/api/v1/tender/list`, {headers})
   }
 
   uploadBid(formData: FormData): Observable<any> {

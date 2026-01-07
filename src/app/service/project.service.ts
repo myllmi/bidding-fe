@@ -11,11 +11,10 @@ export class ProjectService {
 
   httpClient = inject(HttpClient);
 
-  getPageProject(): Observable<ProjectListResponse>  {
+  getAllProject(): Observable<any>  {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' // TODO: + localStorage.getItem('token'),
+      'Content-Type': 'application/json'
     });
-    return this.httpClient.get<ProjectListResponse>(`${environment.apiURL}/project/list`, {headers})
+    return this.httpClient.get<any>(`${environment.apiURL}/api/v1/project/list`, {headers})
   }
 }
