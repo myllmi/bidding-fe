@@ -33,7 +33,7 @@ export class UploadBidComponent {
 
     const formData = new FormData();
     this.files.forEach((file: File) => {
-      formData.append('file', file);
+      formData.append('files', file);
     })
 
     this.bidService.uploadBid(formData).subscribe({

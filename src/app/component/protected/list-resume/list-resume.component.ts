@@ -25,12 +25,6 @@ export class ListResumeComponent {
   arrColumns: Array<any> = []
 
   constructor() {
-    const lang = navigator.language;
-    if (lang.startsWith('pt')) {
-      this.i18n.setLanguage(lang === 'pt-BR' ? 'pt-BR' : 'pt-PT');
-    } else {
-      this.i18n.setLanguage('en');
-    }
     this.fetchResume(true);
     this.i18n.getTranslation('candidate.name').subscribe(result => {
       this.arrColumns.push({key: 'name_professional', label: result, sortable: true})

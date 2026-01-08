@@ -19,10 +19,8 @@ export class BidService {
   }
 
   uploadBid(formData: FormData): Observable<any> {
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' // TODO: + localStorage.getItem('token'),
-    });
-    return this.httpClient.post(`${environment.apiURL}/bidding/upload`, formData, {headers});
+    const headers = new HttpHeaders({});
+    return this.httpClient.post(`${environment.apiURL}/api/v1/tender/upload`, formData, {headers});
   }
 
   getBid(idBidding: string):  Observable<any>  {
@@ -41,8 +39,7 @@ export class BidService {
 
   evaluateBid(idBidding: string):  Observable<ResponseMessage>  {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' // TODO: + localStorage.getItem('token'),
+      'Content-Type': 'application/json'
     });
     return this.httpClient.post<ResponseMessage>(`${environment.apiURL}/api/v1/tender/evaluate/${idBidding}`, {headers})
   }
