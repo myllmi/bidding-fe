@@ -5,6 +5,7 @@ import {marked} from 'marked';
 import {ProfileService} from '../../../service/profile.service';
 import {CandidateService} from '../../../service/candidate.service';
 import {FinalResumeData} from '../../../model/interfaces';
+import {catchError, EMPTY, switchMap, tap} from 'rxjs';
 
 @Component({
   selector: 'app-preview-bid',
@@ -23,44 +24,33 @@ export class PreviewBidComponent implements OnInit {
   invalidBid: boolean = false;
 
   rational: string = '';
-  arrFinalResume: FinalResumeData[] = [];
+  arrFinalResume: any[] = [];
 
   ngOnInit() {
     const idBid = this.activatedRoute.snapshot.paramMap.get('idBid');
     if (!idBid) {
       this.invalidBid = true;
     } else {
-      this.bidService.getBid(idBid).subscribe({
-          next: res => {
-            this.rational = res.data['rational']
-
-            this.profileService.getAllProfiles(idBid).subscribe({
-              next: res => {
-                res.data.forEach(profile => {
-                  this.candidateService.getAllCandidates(profile['id']).subscribe({
-                    next: res => {
-                      res.data.forEach(item => {
-                        this.arrFinalResume.push({
-                          profile: profile,
-                          candidate: item,
-                          resume: JSON.parse(item.final_resume)
-                        })
-                      })
-                    },
-                    error: err => {},
-                    complete: () => {}
-                  })
-                })
-              },
-              error: err => {},
-              complete: () => {}
-            })
-
-          },
-          error: err => {},
-          complete: () => {}
-        }
-      )
+      this.bidService.getBid(idBid).pipe(
+        tap(bid => {
+          this.rational = bid.rational_md;
+        }),
+        switchMap(bid =>
+          this.bidService.getBidCandidate(bid.evaluation_id)
+        ),
+        catchError(err => {
+          console.error('Error on get bid:', err);
+          return EMPTY;
+        })
+      ).subscribe(candidate => {
+        console.log(candidate);
+        candidate.forEach((item: { profile: any; name_professional: any; }) => {
+          this.arrFinalResume.push({
+            profile: item.profile,
+            candidate: item.name_professional
+          })
+        })
+      });
     }
   }
 

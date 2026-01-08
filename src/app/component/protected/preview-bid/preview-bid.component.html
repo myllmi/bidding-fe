@@ -12,27 +12,16 @@
 
   @for (finalResume of arrFinalResume; track $index) {
     <li class="mb-4">
-      <strong class="text-amber-600">{{ finalResume.profile.name }} - {{ finalResume.candidate.name }}</strong>
-      <div class="text-amber-500 mt-2">Formação Acadêmica</div>
-      @for (academicTitle of finalResume.resume.academic.title; track $index) {
-        <div class="text-gray-600 ml-4">{{ academicTitle }}</div>
-      }
-      @if (finalResume.resume.certification.certification.length > 0) {
-        <div class="text-amber-500 mt-3">Certificações</div>
-      }
-      @for (certification of finalResume.resume.certification.certification; track $index) {
-        <div class="text-gray-600 ml-4">{{ certification }}</div>
-      }
-
-      <div class="text-amber-500 mt-3">Criterio de Escolha</div>
-      @for (criteria of finalResume.resume.criteria; track $index) {
-        <div class="text-gray-600 ml-3">{{ criteria.criteria }}</div>
-        @for (experience of criteria.experiences; track $index) {
-          <div class="text-amber-500 mt-2 ml-3">{{ experience.entity }}</div>
-          <div class="text-gray-950 ml-5">{{ experience.period }}</div>
-          <div class="text-gray-950 ml-5"><span [innerHTML]="convertExperience(experience.experience)"></span></div>
-        }
-      }
+      <strong class="text-amber-600">{{ finalResume.profile }} - {{ finalResume.candidate }}</strong>
+<!--      <div class="text-amber-500 mt-3">Criterio de Escolha</div>-->
+<!--      @for (criteria of finalResume.resume.criteria; track $index) {-->
+<!--        <div class="text-gray-600 ml-3">{{ criteria.criteria }}</div>-->
+<!--        @for (experience of criteria.experiences; track $index) {-->
+<!--          <div class="text-amber-500 mt-2 ml-3">{{ experience.entity }}</div>-->
+<!--          <div class="text-gray-950 ml-5">{{ experience.period }}</div>-->
+<!--          <div class="text-gray-950 ml-5"><span [innerHTML]="convertExperience(experience.experience)"></span></div>-->
+<!--        }-->
+<!--      }-->
     </li>
   }
 

@@ -65,6 +65,8 @@ export class ListBidComponent {
   }
 
   protected onEvaluate($event: any) {
+    console.log($event);
+    console.log($event.id);
     this.bidService.evaluateBid($event.id).subscribe({
       next: res => {
         this.fetchBid(true);

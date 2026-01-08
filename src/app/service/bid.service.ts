@@ -25,12 +25,18 @@ export class BidService {
     return this.httpClient.post(`${environment.apiURL}/bidding/upload`, formData, {headers});
   }
 
-  getBid(idBidding: string):  Observable<BiddingResponse>  {
+  getBid(idBidding: string):  Observable<any>  {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' // TODO: + localStorage.getItem('token'),
+      'Content-Type': 'application/json'
     });
-    return this.httpClient.get<BiddingResponse>(`${environment.apiURL}/bidding/id/${idBidding}`, {headers})
+    return this.httpClient.get<any>(`${environment.apiURL}/api/v1/tender/${idBidding}`, {headers})
+  }
+
+  getBidCandidate(idEvaluation: string):  Observable<any>  {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.httpClient.get<any>(`${environment.apiURL}/api/v1/tender/candidate/${idEvaluation}`, {headers})
   }
 
   evaluateBid(idBidding: string):  Observable<ResponseMessage>  {
@@ -38,6 +44,6 @@ export class BidService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' // TODO: + localStorage.getItem('token'),
     });
-    return this.httpClient.post<ResponseMessage>(`${environment.apiURL}/bidding/rational/${idBidding}`, {headers})
+    return this.httpClient.post<ResponseMessage>(`${environment.apiURL}/api/v1/tender/evaluate/${idBidding}`, {headers})
   }
 }
