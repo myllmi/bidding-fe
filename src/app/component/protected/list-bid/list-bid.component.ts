@@ -61,7 +61,7 @@ export class ListBidComponent {
 
   arrBid: Array<any> = []
   constructor() {
-    this.fetchBid(true);
+    // this.fetchBid(true);
   }
 
   protected onEvaluate($event: any) {
