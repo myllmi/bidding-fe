@@ -1,16 +1,17 @@
-import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
-import {NgIf} from '@angular/common';
+import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import {BidService} from '../../../../service/bid.service';
+import {CustomerService} from '../../../../service/customer.service';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-upload-bid',
   imports: [
-    NgIf
+    FormsModule
   ],
   templateUrl: './upload-bid.component.html',
   styleUrl: './upload-bid.component.css',
 })
-export class UploadBidComponent {
+export class UploadBidComponent implements OnInit {
 
   @Input() isOpen = false;
   @Input() title = 'Modal Title';
@@ -22,6 +23,21 @@ export class UploadBidComponent {
 
   bidService = inject(BidService)
 
+  arrCustomer: Array<any> = [];
+  customerService = inject(CustomerService)
+  customerId: string = "";
+
+  ngOnInit(): void {
+    this.customerService.getAllCustomer().subscribe({
+      next: res => {
+        this.arrCustomer = Array.isArray(res) ? res : []
+        this.customerId = res[0].id;
+      },
+      error: err => {},
+      complete: () => {}
+    })
+  }
+
   close(): void {
     this.isOpen = false;
     this.files = [];
@@ -32,6 +48,7 @@ export class UploadBidComponent {
     if (this.files.length <= 0) return;
 
     const formData = new FormData();
+    formData.append('customer_id', this.customerId)
     this.files.forEach((file: File) => {
       formData.append('files', file);
     })
@@ -43,7 +60,8 @@ export class UploadBidComponent {
         this.confirmed.emit();
       },
       error: (err) => console.error('Upload error', err),
-      complete: () => {}
+      complete: () => {
+      }
     })
 
   }
@@ -72,3 +90,4 @@ export class UploadBidComponent {
     this.isDragging = false;
   }
 }
+
