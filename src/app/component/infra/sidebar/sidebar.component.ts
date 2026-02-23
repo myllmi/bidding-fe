@@ -26,4 +26,12 @@ export class SidebarComponent {
   protected goListProject() {
     this.router.navigate(['/list-project']).then();
   }
+
+  protected goListCustomer() {
+    this.router.navigate(['/list-customer']).then();
+  }
+
+  protected goListBusinessSector() {
+    this.router.navigate(['/list-sector']).then();
+  }
 }

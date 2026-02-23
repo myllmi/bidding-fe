@@ -15,11 +15,11 @@ export function transformEvaluate(value: string) {
   if (!value) {
     return valueFormat;
   }
-  if (value.trim() === '0') {
+  if (value.trim() === 'N') {
     valueFormat = 'Não Analisado'
-  } else if (value.trim() === '1') {
+  } else if (value.trim() === 'Y') {
     valueFormat = 'A analisar...'
-  } else if (value.trim() === '2') {
+  } else if (value.trim() === 'D') {
     valueFormat = 'Analisado'
   }
   return valueFormat;

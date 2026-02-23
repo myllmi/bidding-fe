@@ -43,7 +43,6 @@ export class PreviewBidComponent implements OnInit {
           return EMPTY;
         })
       ).subscribe(candidate => {
-        console.log(candidate);
         candidate.forEach((item: { profile: any; name_professional: any; }) => {
           this.arrFinalResume.push({
             profile: item.profile,

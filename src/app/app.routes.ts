@@ -9,6 +9,8 @@ import {ListResumeComponent} from './component/protected/list-resume/list-resume
 import {ListBidComponent} from './component/protected/list-bid/list-bid.component';
 import {ListProjectComponent} from './component/protected/list-project/list-project.component';
 import {PreviewBidComponent} from './component/protected/preview-bid/preview-bid.component';
+import {ListCustomerComponent} from './component/protected/list-customer/list-customer.component';
+import {ListSectorComponent} from './component/protected/list-sector/list-sector.component';
 
 export const routes: Routes = [
   {
@@ -20,6 +22,8 @@ export const routes: Routes = [
       {path: 'list-bid', component: ListBidComponent, title: 'Bidding Platform :: Lista de Concursos'},
       {path: 'preview-bid/:idBid', component: PreviewBidComponent, title: 'Bidding Platform :: Visualização do Racional'},
       {path: 'list-project', component: ListProjectComponent, title: 'Bidding Platform :: Lista de Projetos'},
+      {path: 'list-customer', component: ListCustomerComponent, title: 'Bidding Platform :: Lista de Clientes'},
+      {path: 'list-sector', component: ListSectorComponent, title: 'Bidding Platform :: Lista de Setores'},
     ],
   },
   {
